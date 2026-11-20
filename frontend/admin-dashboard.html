@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin Dashboard | AutoTrack Showroom</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #2c2c2c, #800000);
+    color: #eee;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+  nav {
+    background: #800000;
+    padding: 15px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+  }
+  nav .brand {
+    font-weight: 700; font-size: 2rem;
+    color: #fff;
+  }
+  nav .nav-links button {
+    background: transparent; border: none;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 10px 14px;
+    font-size: 1.1rem;
+    margin-left: 15px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+  }
+  nav .nav-links button:hover {
+    background: #b22222;
+  }
+
+  main {
+    flex-grow: 1;
+    padding: 30px;
+    max-width: 1200px;
+    margin: auto;
+    width: 100%;
+  }
+  h1, h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ffdddd;
+    text-shadow: 1px 1px 6px #000;
+    font-size: 2rem;
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+  }
+  .tab-btn {
+    background: #440000;
+    border: none;
+    color: #ffbbbb;
+    padding: 12px 20px;
+    margin: 0 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 10px 10px 0 0;
+    transition: background-color 0.3s ease;
+  }
+  .tab-btn.active {
+    background: #b22222;
+    color: white;
+    font-weight: 700;
+  }
+  .tab-btn:hover:not(.active) {
+    background: #6a0000;
+  }
+
+  .tab-content {
+    background: #330000;
+    padding: 25px;
+    border-radius: 0 10px 10px 10px;
+    box-shadow: 0 6px 15px rgba(255,0,0,0.3);
+    color: #eee;
+    font-size: 1.1rem;
+  }
+  .tab-content > * {
+    margin-bottom: 22px;
+  }
+
+  form {
+    background: #220000;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px #660000;
+  }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  input[type=text], input[type=number], input[type=email], select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 70px;
+  }
+  button[type=submit], button.action-btn {
+    background: #b22222;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+  }
+  button[type=submit]:hover, button.action-btn:hover {
+    background: #ff4d4d;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #440000;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 1rem;
+  }
+  th, td {
+    padding: 12px 14px;
+    text-align: left;
+  }
+  th {
+    background: #b22222;
+    font-weight: 700;
+  }
+  tbody tr:nth-child(even) {
+    background: #550000;
+  }
+  tbody tr:hover {
+    background: #770000;
+  }
+  .small-btn {
+    background: #800000;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  .small-btn:hover {
+    background: #ff4d4d;
+  }
+
+  .search-input {
+    margin-bottom: 15px;
+    width: 100%;
+    max-width: 400px;
+    display: block;
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  #reportsTab:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+  #reportsTab .action-btn {
+    margin: 10px;
+    width: 90%;
+    max-width: 350px;
+    font-size: 1.1rem;
+  }
+  #reportOutput {
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  @media(max-width: 700px) {
+    .tabs {
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      margin: 5px 6px;
+      flex: 1 1 100px;
+      font-size: 1rem;
+      padding: 10px 14px;
+    }
+  }
+  
+</style>
+
+</head>
+<body>
+
+<nav>
+  <div class="brand">AutoTrack Showroom - Admin</div>
+  <div class="nav-links">
+    <button id="profileBtn">Profile</button>
+    <button id="logoutBtn">Logout</button>
+  </div>
+</nav>
+
+<main>
+  <h1>Admin Dashboard</h1>
+
+  <div class="tabs" role="tablist" aria-label="Admin dashboard tabs">
+    <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="vehiclesTab" id="vehiclesTabBtn">Vehicles</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="bookingsTab" id="bookingsTabBtn">Bookings</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="usersTab" id="usersTabBtn">Users</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="feedbackTab" id="feedbackTabBtn">Feedback</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="reportsTab" id="reportsTabBtn">Reports</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="supportTab" id="supportTabBtn">Support</button>
+  </div>
+
+  <!-- Vehicles Tab -->
+  <section class="tab-content" id="vehiclesTab" role="tabpanel" aria-labelledby="vehiclesTabBtn">
+    <h2>Manage Vehicles</h2>
+    <form id="vehicleForm">
+      <label for="vehicleModel">Model</label>
+      <input type="text" id="vehicleModel" name="model" required placeholder="e.g., Toyota Corolla" />
+      
+      <label for="vehicleBrand">Brand</label>
+      <input type="text" id="vehicleBrand" name="brand" required placeholder="e.g., Toyota" />
+      
+      <label for="vehicleYear">Year</label>
+      <input type="number" id="vehicleYear" name="year" required min="1980" max="2025" placeholder="e.g., 2022" />
+      
+      <label for="vehiclePrice">Price ($)</label>
+      <input type="number" id="vehiclePrice" name="price" required min="0" placeholder="e.g., 15000" />
+      
+      <label for="vehicleDescription">Description</label>
+      <textarea id="vehicleDescription" name="description" placeholder="Brief details about the vehicle"></textarea>
+      
+      <button type="submit">Add Vehicle</button>
+    </form>
+
+    <input type="text" class="search-input" id="searchVehicles" placeholder="Search Vehicles..." aria-label="Search Vehicles" />
+
+    <table aria-label="Vehicles list" id="vehiclesTable">
+      <thead>
+        <tr>
+          <th>ID</th><th>Model</th><th>Brand</th><th>Year</th><th>Price</th><th>Description</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Vehicle rows added dynamically -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Bookings Tab -->
+  <section class="tab-content" id="bookingsTab" role="tabpanel" aria-labelledby="bookingsTabBtn" hidden>
+    <h2>Manage Bookings</h2>
+    <input type="text" class="search-input" id="searchBookings" placeholder="Search Bookings..." aria-label="Search Bookings" />
+    <table aria-label="Bookings list" id="bookingsTable">
+      <thead>
+        <tr>
+          <th>Booking ID</th><th>Customer</th><th>Vehicle</th><th>Date</th><th>Status</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Booking rows dynamically -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Users Tab -->
+  <section class="tab-content" id="usersTab" role="tabpanel" aria-labelledby="usersTabBtn" hidden>
+    <h2>User Management</h2>
+    <form id="userForm">
+      <label for="userName">Full Name</label>
+      <input type="text" id="userName" name="name" required placeholder="e.g., John Doe" />
+      
+      <label for="userEmail">Email</label>
+      <input type="email" id="userEmail" name="email" required placeholder="e.g., john@example.com" />
+      
+      <label for="userRole">Role</label>
+      <select id="userRole" name="role" required>
+        <option value="" disabled selected>Select Role</option>
+        <option value="admin">Admin</option>
+        <option value="staff">Staff</option>
+        <option value="customer">Customer</option>
+      </select>
+      
+      <button type="submit">Add User</button>
+    </form>
+
+    <input type="text" class="search-input" id="searchUsers" placeholder="Search Users..." aria-label="Search Users" />
+
+    <table aria-label="Users list" id="usersTable">
+      <thead>
+        <tr>
+          <th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- User rows dynamically -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Feedback Tab -->
+  <section class="tab-content" id="feedbackTab" role="tabpanel" aria-labelledby="feedbackTabBtn" hidden>
+    <h2>Customer Feedback</h2>
+    <input type="text" class="search-input" id="searchFeedback" placeholder="Search Feedback..." aria-label="Search Feedback" />
+    <table aria-label="Feedback list" id="feedbackTable">
+      <thead>
+        <tr>
+          <th>Feedback ID</th><th>Customer</th><th>Message</th><th>Date</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Feedback rows dynamically -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Reports Tab -->
+  <section class="tab-content" id="reportsTab" role="tabpanel" aria-labelledby="reportsTabBtn" hidden>
+    <h2>Reports</h2>
+    <button class="action-btn" id="generateSalesReportBtn">Generate Sales Report</button>
+    <button class="action-btn" id="generateBookingReportBtn">Generate Booking Report</button>
+    <button class="action-btn" id="generateUserActivityReportBtn">Generate User Activity Report</button>
+    <div id="reportOutput" style="margin-top:20px; color:#ffdddd; min-height:120px;"></div>
+  </section>
+
+  <!-- Support Tab -->
+  <section class="tab-content" id="supportTab" role="tabpanel" aria-labelledby="supportTabBtn" hidden>
+    <h2>Support Requests</h2>
+    <input type="text" class="search-input" id="searchSupport" placeholder="Search Support Requests..." aria-label="Search Support Requests" />
+    <table aria-label="Support Requests list" id="supportTable">
+      <thead>
+        <tr>
+          <th>Ticket ID</th><th>Customer</th><th>Issue</th><th>Status</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Support tickets dynamically -->
+      </tbody>
+    </table>
+  </section>
+  
+
+</main>
+
+
+
+    
+<script>
+  // ✅ Admin Panel Tab Switching
+  const tabs = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      tabContents.forEach(tc => tc.hidden = true);
+
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      const tabId = btn.getAttribute('aria-controls');
+      document.getElementById(tabId).hidden = false;
+    });
+  });
+
+  // ✅ Placeholder Data with Dummy Entries
+  let vehicles = [
+  { id: 1, model: 'Audi R8', brand: 'Audi', year: 2017, price: 145000, description: 'Sedan, 4 doors' },
+  { id: 2, model: 'BMW i8', brand: 'BMW', year: 2019, price: 135000, description: 'Compact car' },
+  { id: 3, model: 'Mercedes-Benz C-Class', brand: 'Mercedes-Benz', year: 2020, price: 42000, description: 'Luxury sedan, 4 doors' },
+  { id: 4, model: 'Tesla Model S', brand: 'Tesla', year: 2021, price: 90000, description: 'Electric sedan, autopilot' },
+  { id: 5, model: 'Ford Mustang', brand: 'Ford', year: 2018, price: 36000, description: 'Muscle car, 2 doors' },
+  { id: 6, model: 'Toyota Corolla', brand: 'Toyota', year: 2022, price: 22000, description: 'Reliable compact car' },
+  { id: 7, model: 'Honda Civic', brand: 'Honda', year: 2019, price: 21000, description: 'Fuel efficient, 4 doors' },
+  { id: 8, model: 'Chevrolet Camaro', brand: 'Chevrolet', year: 2020, price: 39000, description: 'Sport coupe, aggressive styling' },
+  { id: 9, model: 'Lamborghini Huracán', brand: 'Lamborghini', year: 2021, price: 210000, description: 'Exotic sports car' },
+  { id: 10, model: 'Porsche 911', brand: 'Porsche', year: 2018, price: 99000, description: 'Iconic sports car, 2+2 seating' },
+  { id: 11, model: 'Nissan GT-R', brand: 'Nissan', year: 2017, price: 95000, description: 'High-performance coupe' },
+  { id: 12, model: 'Kia Sportage', brand: 'Kia', year: 2023, price: 30000, description: 'Compact SUV, family friendly' },
+  { id: 13, model: 'Hyundai Elantra', brand: 'Hyundai', year: 2020, price: 18000, description: 'Economical sedan' },
+  { id: 14, model: 'Jeep Wrangler', brand: 'Jeep', year: 2021, price: 44000, description: 'Off-road SUV, removable doors' },
+  { id: 15, model: 'Mazda MX-5 Miata', brand: 'Mazda', year: 2019, price: 27000, description: 'Lightweight convertible' }
+];
+
+let bookings = [
+  { id: 1, customer: 'John Doe', vehicle: 'Audi R8', date: '2025-06-01', status: 'Confirmed' },
+  { id: 2, customer: 'Bob James', vehicle: 'BMW i8', date: '2025-07-15', status: 'Pending' },
+  { id: 3, customer: 'Ayesha Siddiqui', vehicle: 'Toyota Corolla', date: '2025-06-20', status: 'Confirmed' },
+  { id: 4, customer: 'Zain Malik', vehicle: 'Honda Civic', date: '2025-08-10', status: 'Cancelled' },
+  { id: 5, customer: 'David Smith', vehicle: 'Tesla Model S', date: '2025-07-05', status: 'Pending' },
+  { id: 6, customer: 'Fatima Noor', vehicle: 'Kia Sportage', date: '2025-07-25', status: 'Confirmed' },
+  { id: 7, customer: 'Imran Rafiq', vehicle: 'Jeep Wrangler', date: '2025-09-01', status: 'Confirmed' },
+  { id: 8, customer: 'Emily Johnson', vehicle: 'Mercedes-Benz C-Class', date: '2025-06-30', status: 'Pending' }
+];
+
+let users = [
+  { id: 1, name: 'Ali Khan', email: 'ali.khan@gmail.com', role: 'Admin' },
+  { id: 2, name: 'John Doe', email: 'john.doe@gmail.com', role: 'Customer' },
+  { id: 3, name: 'Sara Ahmed', email: 'sara.ahmed@gmail.com', role: 'Staff' },
+  { id: 4, name: 'Bilal Saeed', email: 'bilal.saeed@gmail.com', role: 'Customer' },
+  { id: 5, name: 'Nida Yousuf', email: 'nida.yousuf@gmail.com', role: 'Customer' },
+  { id: 6, name: 'Omar Farooq', email: 'omar.farooq@gmail.com', role: 'Staff' },
+  { id: 7, name: 'Jessica Brown', email: 'jessica.brown@gmail.com', role: 'Customer' }
+];
+
+
+let feedbacks = [
+  { id: 1, customer: 'John Doe', message: 'Great service!', date: '2025-05-15' },
+  { id: 2, customer: 'Bob James', message: 'Could improve response time.', date: '2025-05-20' },
+  { id: 3, customer: 'Ayesha Siddiqui', message: 'Very friendly staff.', date: '2025-06-01' },
+  { id: 4, customer: 'Bilal Saeed', message: 'Smooth booking process.', date: '2025-06-03' },
+  { id: 5, customer: 'Fatima Noor', message: 'Loved the variety of cars.', date: '2025-06-10' },
+  { id: 6, customer: 'Jessica Brown', message: 'Showroom ambiance was excellent.', date: '2025-06-12' }
+];
+
+let supportRequests = [
+  { id: 1, customer: 'John Doe', issue: 'My vehicle delivery was delayed by 3 weeks.', status: 'Open' },
+  { id: 2, customer: 'Bob James', issue: 'Request to reschedule my test drive.', status: 'Resolved' },
+  { id: 3, customer: 'Zain Malik', issue: 'Wrong invoice generated.', status: 'Pending' },
+  { id: 4, customer: 'Fatima Noor', issue: 'Issue with warranty terms.', status: 'Resolved' },
+  { id: 5, customer: 'Imran Rafiq', issue: 'Need help with vehicle financing.', status: 'Open' },
+  { id: 6, customer: 'Ayesha Siddiqui', issue: 'I want to cancel my booking.', status: 'Closed' }
+];
+
+// ID Counters for Sequential Auto-Increment
+let nextVehicleId = vehicles.length + 1;
+let nextBookingId = bookings.length + 1;
+let nextUserId = users.length + 1;
+let nextFeedbackId = feedbacks.length + 1;
+let nextSupportId = supportRequests.length + 1;
+
+  // ✅ VEHICLE MANAGEMENT (preserved logic)
+  const vehicleForm = document.getElementById('vehicleForm');
+  const vehiclesTableBody = document.querySelector('#vehiclesTable tbody');
+  const searchVehiclesInput = document.getElementById('searchVehicles');
+
+  function renderVehiclesTable(data) {
+    vehiclesTableBody.innerHTML = '';
+    data.forEach(v => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${v.id}</td>
+        <td>${v.model}</td>
+        <td>${v.brand}</td>
+        <td>${v.year}</td>
+        <td>$${v.price.toLocaleString()}</td>
+        <td>${v.description}</td>
+        <td>
+          <button class="small-btn" onclick="editVehicle('${v.id}')">Edit</button>
+          <button class="small-btn" onclick="deleteVehicle('${v.id}')">Delete</button>
+        </td>
+      `;
+      vehiclesTableBody.appendChild(tr);
+    });
+  }
+
+  function editVehicle(id) {
+    const vehicle = vehicles.find(v => v.id === id);
+    if (!vehicle) return alert('Vehicle not found');
+    vehicleForm.model.value = vehicle.model;
+    vehicleForm.brand.value = vehicle.brand;
+    vehicleForm.year.value = vehicle.year;
+    vehicleForm.price.value = vehicle.price;
+    vehicleForm.description.value = vehicle.description;
+
+    vehicleForm.querySelector('button[type="submit"]').textContent = 'Update Vehicle';
+    vehicleForm.onsubmit = function(e) {
+      e.preventDefault();
+      vehicle.model = vehicleForm.model.value.trim();
+      vehicle.brand = vehicleForm.brand.value.trim();
+      vehicle.year = +vehicleForm.year.value;
+      vehicle.price = +vehicleForm.price.value;
+      vehicle.description = vehicleForm.description.value.trim();
+      renderVehiclesTable(vehicles);
+      vehicleForm.reset();
+      vehicleForm.querySelector('button[type="submit"]').textContent = 'Add Vehicle';
+      vehicleForm.onsubmit = defaultVehicleSubmit;
+    };
+  }
+
+  function defaultVehicleSubmit(e) {
+    e.preventDefault();
+    const model = vehicleForm.model.value.trim();
+    const brand = vehicleForm.brand.value.trim();
+    const year = +vehicleForm.year.value;
+    const price = +vehicleForm.price.value;
+    const description = vehicleForm.description.value.trim();
+    const newVehicle = {
+      id: 'V' + String(vehicles.length + 1).padStart(3, '0'),
+      model, brand, year, price, description
+    };
+    vehicles.push(newVehicle);
+    renderVehiclesTable(vehicles);
+    vehicleForm.reset();
+  }
+  vehicleForm.onsubmit = defaultVehicleSubmit;
+
+  function deleteVehicle(id) {
+    if (!confirm('Delete this vehicle?')) return;
+    vehicles = vehicles.filter(v => v.id !== id);
+    renderVehiclesTable(vehicles);
+  }
+
+  searchVehiclesInput.addEventListener('input', e => {
+    const query = e.target.value.toLowerCase();
+    const filtered = vehicles.filter(v => 
+      v.model.toLowerCase().includes(query) ||
+      v.brand.toLowerCase().includes(query) ||
+      v.description.toLowerCase().includes(query)
+    );
+    renderVehiclesTable(filtered);
+  });
+
+  renderVehiclesTable(vehicles);
+
+  // ✅ BOOKINGS TABLE
+  const bookingsTableBody = document.querySelector('#bookingsTable tbody');
+  const searchBookingsInput = document.getElementById('searchBookings');
+
+  function renderBookingsTable(data) {
+    bookingsTableBody.innerHTML = '';
+    data.forEach(b => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${b.id}</td>
+        <td>${b.customer}</td>
+        <td>${b.vehicle}</td>
+        <td>${b.date}</td>
+        <td>${b.status}</td>
+        <td>
+          <button class="small-btn" onclick="approveBooking('${b.id}')">Confirmed</button>
+          <button class="small-btn" onclick="cancelBooking('${b.id}')">Pending</button>
+        </td>
+      `;
+      bookingsTableBody.appendChild(tr);
+    });
+  }
+
+  function approveBooking(id) {
+    const booking = bookings.find(b => b.id === id);
+    if (!booking) return alert('Booking not found');
+    booking.status = 'Confirmed';
+    renderBookingsTable(bookings);
+  }
+  function cancelBooking(id) {
+    const booking = bookings.find(b => b.id === id);
+    if (!booking) return alert('Booking not found');
+    booking.status = 'Pending';
+    renderBookingsTable(bookings);
+  }
+  renderBookingsTable(bookings);
+
+  // ✅ USERS TABLE
+  const usersTableBody = document.querySelector('#usersTable tbody');
+  function renderUsersTable(data) {
+    usersTableBody.innerHTML = '';
+    data.forEach(u => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${u.id}</td>
+        <td>${u.name}</td>
+        <td>${u.email}</td>
+        <td>${u.role}</td>
+        <td>
+          <button class="small-btn">Edit</button>
+          <button class="small-btn">Delete</button>
+        </td>
+      `;
+      usersTableBody.appendChild(tr);
+    });
+  }
+  renderUsersTable(users);
+
+  // ✅ FEEDBACK TABLE
+  const feedbackTableBody = document.querySelector('#feedbackTable tbody');
+  function renderFeedbackTable(data) {
+    feedbackTableBody.innerHTML = '';
+    data.forEach(f => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${f.id}</td>
+        <td>${f.customer}</td>
+        <td>${f.message}</td>
+        <td>${f.date}</td>
+        <td><button class="small-btn" onclick="deleteFeedback('${f.id}')">Delete</button></td>
+      `;
+      feedbackTableBody.appendChild(tr);
+    });
+  }
+  function deleteFeedback(id) {
+    if (!confirm('Delete this feedback?')) return;
+    feedbacks = feedbacks.filter(f => f.id !== id);
+    renderFeedbackTable(feedbacks);
+  }
+  renderFeedbackTable(feedbacks);
+
+  // ✅ SUPPORT TABLE
+  const supportTableBody = document.querySelector('#supportTable tbody');
+  function renderSupportTable(data) {
+    supportTableBody.innerHTML = '';
+    data.forEach(s => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${s.id}</td>
+        <td>${s.customer}</td>
+        <td>${s.issue}</td>
+        <td>${s.status}</td>
+        <td>
+          <button class="small-btn" onclick="closeSupportRequest('${s.id}')">Close</button>
+          <button class="small-btn" onclick="deleteSupportRequest('${s.id}')">Delete</button>
+        </td>
+      `;
+      supportTableBody.appendChild(tr);
+    });
+  }
+  function closeSupportRequest(id) {
+    const req = supportRequests.find(s => s.id === id);
+    if (!req) return alert('Request not found');
+    req.status = 'Closed';
+    renderSupportTable(supportRequests);
+  }
+  function deleteSupportRequest(id) {
+    if (!confirm('Delete this request?')) return;
+    supportRequests = supportRequests.filter(s => s.id !== id);
+    renderSupportTable(supportRequests);
+  }
+  renderSupportTable(supportRequests);
+
+  // ✅ REPORTS
+  const reportOutput = document.getElementById('reportOutput');
+  document.getElementById('generateSalesReportBtn').addEventListener('click', () => {
+    const confirmed = bookings.filter(b => b.status === 'Approved').length;
+    const total = confirmed * 100000;
+    reportOutput.textContent = `Total Sales: $${total.toLocaleString()}`;
+  });
+  document.getElementById('generateBookingReportBtn').addEventListener('click', () => {
+    reportOutput.textContent = `Total Bookings: ${bookings.length}`;
+  });
+  document.getElementById('generateUserActivityReportBtn').addEventListener('click', () => {
+    const activity = users.length + feedbacks.length + supportRequests.length;
+    reportOutput.textContent = `User Interactions: ${activity}`;
+  });
+
+  // ✅ LOGOUT
+document.getElementById('logoutBtn').addEventListener('click', function () {
+  localStorage.removeItem('token');
+  window.location.href = 'login.html';
+});
+
+
+
+
+
+  
+
+  
+</script>
+</body>
+</html>

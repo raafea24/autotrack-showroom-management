@@ -1,0 +1,29 @@
+{
+  "name": "autotrack-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "check": "node --check db.js && node --check index.js",
+    "test": "npm run check"
+  },
+  "keywords": [
+    "showroom",
+    "express",
+    "mysql",
+    "jwt"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "Express and MySQL authentication service for the AutoTrack showroom interface.",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.1"
+  }
+}

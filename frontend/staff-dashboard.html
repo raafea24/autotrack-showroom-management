@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Staff Dashboard | AutoTrack Showroom</title>
+  <style>
+    :root {
+      --bg-color: #1a1a1a;
+      --text-color: #ffffff;
+      --main-color: #2c2c2c;
+      --accent-color: #800000;
+      --highlight-color: #d4afaf;
+      --btn-hover-color: #cc6666;
+      --shadow-color: #000000aa;
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: all 0.3s ease-in-out;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--main-color);
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px var(--shadow-color);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--highlight-color);
+    }
+
+    #headerButtons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    button, 
+    #headerButtons button {
+      background-color: var(--accent-color);
+      border: none;
+      padding: 0.7rem 1.4rem;
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--text-color);
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    button:hover, 
+    #headerButtons button:hover {
+      background-color: var(--highlight-color);
+      color: var(--bg-color);
+      transform: scale(1.03);
+    }
+
+    #logoutBtn {
+      background-color: #990000;
+    }
+
+    #logoutBtn:hover {
+      background-color: #ff4d4d;
+    }
+
+    #profileBtn {
+      background-color: #004080;
+    }
+
+    #profileBtn:hover {
+      background-color: #3399ff;
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    #loginScreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  animation: fadeIn 0.7s ease;
+}
+
+.login-box {
+  background-color: var(--main-color);
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px var(--shadow-color);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+.login-box h2 {
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  color: var(--highlight-color);
+}
+
+.login-box .subtext {
+  color: #cccccc;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.login-box .form-group {
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.login-box label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: bold;
+}
+
+.login-box select {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 6px;
+  border: none;
+  background-color: #f4f4f4;
+  color: #000;
+  font-size: 1rem;
+  appearance: none;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-box button:hover {
+  background-color: var(--highlight-color);
+  color: var(--bg-color);
+}
+
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #loginScreen h2 {
+      text-align: center;
+      color: var(--highlight-color);
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background-color: var(--accent-color);
+      padding: 1.2rem;
+      border-radius: 8px;
+    }
+
+    form label {
+      margin-bottom: 0.3rem;
+      font-weight: bold;
+    }
+
+    form input,
+    form select,
+    form textarea,
+    .search-input {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: none;
+      background-color: #f4f4f4;
+      color: #000000;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .search-input {
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .tab-btn {
+      background-color: var(--main-color);
+      color: var(--text-color);
+      border: none;
+      padding: 0.8rem 1.4rem;
+      cursor: pointer;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .tab-btn.active {
+      background-color: var(--highlight-color);
+      color: var(--bg-color);
+    }
+
+    .tab-content {
+      background-color: var(--main-color);
+      padding: 1.5rem;
+      border-radius: 0 0 8px 8px;
+      min-height: 300px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      color: var(--text-color);
+    }
+
+    table thead {
+      background-color: var(--accent-color);
+    }
+
+    table th,
+    table td {
+      padding: 0.8rem 1rem;
+      border: 1px solid var(--highlight-color);
+      text-align: left;
+    }
+
+    .small-btn {
+      background-color: #a52a2a;
+      padding: 0.5rem 0.9rem;
+      font-size: 0.85rem;
+      border-radius: 4px;
+      color: var(--text-color);
+      border: none;
+      cursor: pointer;
+    }
+
+    .small-btn:hover {
+      background-color: var(--btn-hover-color);
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .tab-content p {
+      text-align: center;
+      font-style: italic;
+      color: #ffcccc;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        font-size: 16px;
+      }
+
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      .tab-btns {
+        flex-direction: column;
+      }
+
+      form input,
+      form textarea,
+      form select,
+      button {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Staff Dashboard</h1>
+  <div id="headerButtons" hidden>
+    <button id="profileBtn">Profile</button>
+    <button id="logoutBtn">Logout</button>
+  </div>
+</header>
+
+<main>
+  <section id="loginScreen">
+  <div class="login-box">
+    <h2>Staff Login</h2>
+    <p class="subtext">Please select your role to continue</p>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="roleSelect">Choose your role</label>
+        <select id="roleSelect" required>
+          <option value="" disabled selected>Select Role</option>
+          <option value="sales">Sales Manager</option>
+          <option value="support">Support Staff</option>
+          <option value="admin">Administrator</option>
+        </select>
+      </div>
+      <button type="submit">Continue</button>
+    </form>
+  </div>
+</section>
+
+
+  <!-- Dashboard -->
+  <section id="dashboardScreen" hidden>
+    <div class="tab-btns" id="tabsContainer">
+      <!-- Inject tab buttons here -->
+    </div>
+
+    <!-- Vehicles Tab -->
+    <section id="vehiclesTab" class="tab-content" hidden>
+      <h2>Vehicles Management</h2>
+      <form id="vehicleForm">
+        <input type="text" id="model" placeholder="Model" required />
+        <input type="text" id="brand" placeholder="Brand" required />
+        <input type="number" id="year" placeholder="Year" min="1900" max="2100" required />
+        <input type="number" id="price" placeholder="Price (USD)" min="0" step="0.01" required />
+        <textarea id="description" placeholder="Description" rows="2" required></textarea>
+        <button type="submit">Add Vehicle</button>
+      </form>
+      <input type="text" class="search-input" id="searchVehicles" placeholder="Search Vehicles..." />
+      <table id="vehiclesTable">
+        <thead>
+          <tr><th>ID</th><th>Model</th><th>Brand</th><th>Year</th><th>Price</th><th>Description</th><th>Actions</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Bookings Tab -->
+    <section id="bookingsTab" class="tab-content" hidden>
+      <h2>Bookings Management</h2>
+      <input type="text" class="search-input" id="searchBookings" placeholder="Search Bookings..." />
+      <table id="bookingsTable">
+        <thead>
+          <tr><th>ID</th><th>Customer</th><th>Vehicle</th><th>Date</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Users Tab -->
+    <section id="usersTab" class="tab-content" hidden>
+      <h2>Users Management</h2>
+      <form id="userForm">
+        <input type="text" id="userName" placeholder="Name" required />
+        <input type="email" id="userEmail" placeholder="Email" required />
+        <select id="userRole" required>
+          <option value="" disabled selected>Select role</option>
+          <option value="admin">Admin</option>
+          <option value="staff">Staff</option>
+          <option value="customer">Customer</option>
+        </select>
+        <button type="submit">Add User</button>
+      </form>
+      <input type="text" class="search-input" id="searchUsers" placeholder="Search Users..." />
+      <table id="usersTable">
+        <thead>
+          <tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Feedback Tab -->
+    <section id="feedbackTab" class="tab-content" hidden>
+      <h2>Customer Feedback</h2>
+      <input type="text" class="search-input" id="searchFeedback" placeholder="Search Feedback..." />
+      <table id="feedbackTable">
+        <thead>
+          <tr><th>ID</th><th>Customer</th><th>Message</th><th>Date</th><th>Actions</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Reports Tab -->
+    <section id="reportsTab" class="tab-content" hidden>
+      <h2>Reports & Analytics</h2>
+      <p>Reports and analytics data will be displayed here.</p>
+    </section>
+
+    <!-- Support Tab -->
+    <section id="supportTab" class="tab-content" hidden>
+      <h2>Support Tickets</h2>
+      <input type="text" class="search-input" id="searchSupport" placeholder="Search Support Tickets..." />
+      <table id="supportTable">
+        <thead>
+          <tr><th>ID</th><th>Customer</th><th>Issue</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </section>
+</main>
+
+</body>
+</html>
+
+
+
+<script>
+(() => {
+  // Sample in-memory data storage
+  let vehicles = [
+   { id: 1, model: 'Audi R8', brand: 'Audi', year: 2017, price: 145000, description: 'Sedan, 4 doors' },
+{ id: 2, model: 'BMW i8', brand: 'BMW', year: 2019, price: 135000, description: 'Compact car' },
+{ id: 3, model: 'Mercedes-Benz C-Class', brand: 'Mercedes-Benz', year: 2020, price: 42000, description: 'Luxury sedan, 4 doors' },
+{ id: 4, model: 'Tesla Model S', brand: 'Tesla', year: 2021, price: 90000, description: 'Electric sedan, autopilot' },
+{ id: 5, model: 'Ford Mustang', brand: 'Ford', year: 2018, price: 36000, description: 'Muscle car, 2 doors' },
+{ id: 6, model: 'Toyota Corolla', brand: 'Toyota', year: 2022, price: 22000, description: 'Reliable compact car' },
+{ id: 7, model: 'Honda Civic', brand: 'Honda', year: 2019, price: 21000, description: 'Fuel efficient, 4 doors' },
+{ id: 8, model: 'Chevrolet Camaro', brand: 'Chevrolet', year: 2020, price: 39000, description: 'Sport coupe, aggressive styling' },
+{ id: 9, model: 'Lamborghini Huracán', brand: 'Lamborghini', year: 2021, price: 210000, description: 'Exotic sports car' },
+{ id: 10, model: 'Porsche 911', brand: 'Porsche', year: 2018, price: 99000, description: 'Iconic sports car, 2+2 seating' },
+{ id: 11, model: 'Nissan GT-R', brand: 'Nissan', year: 2017, price: 95000, description: 'High-performance coupe' },
+{ id: 12, model: 'Kia Sportage', brand: 'Kia', year: 2023, price: 30000, description: 'Compact SUV, family friendly' },
+{ id: 13, model: 'Hyundai Elantra', brand: 'Hyundai', year: 2020, price: 18000, description: 'Economical sedan' },
+{ id: 14, model: 'Jeep Wrangler', brand: 'Jeep', year: 2021, price: 44000, description: 'Off-road SUV, removable doors' },
+{ id: 15, model: 'Mazda MX-5 Miata', brand: 'Mazda', year: 2019, price: 27000, description: 'Lightweight convertible' }
+
+  ];
+ let bookings = [
+  { id: 1, customer: 'John Doe', vehicle: 'Audi R8', date: '2025-06-01', status: 'Confirmed' },
+  { id: 2, customer: 'Bob James', vehicle: 'BMW i8', date: '2025-07-15', status: 'Pending' },
+  { id: 3, customer: 'Ayesha Siddiqui', vehicle: 'Toyota Corolla', date: '2025-06-20', status: 'Confirmed' },
+  { id: 4, customer: 'Zain Malik', vehicle: 'Honda Civic', date: '2025-08-10', status: 'Cancelled' },
+  { id: 5, customer: 'David Smith', vehicle: 'Tesla Model S', date: '2025-07-05', status: 'Pending' },
+  { id: 6, customer: 'Fatima Noor', vehicle: 'Kia Sportage', date: '2025-07-25', status: 'Confirmed' },
+  { id: 7, customer: 'Imran Rafiq', vehicle: 'Jeep Wrangler', date: '2025-09-01', status: 'Confirmed' },
+  { id: 8, customer: 'Emily Johnson', vehicle: 'Mercedes-Benz C-Class', date: '2025-06-30', status: 'Pending' }
+];
+
+let users = [
+  { id: 1, name: 'Ali Khan', email: 'ali.khan@gmail.com', role: 'Admin' },
+  { id: 2, name: 'John Doe', email: 'john.doe@gmail.com', role: 'Customer' },
+  { id: 3, name: 'Sara Ahmed', email: 'sara.ahmed@gmail.com', role: 'Staff' },
+  { id: 4, name: 'Bilal Saeed', email: 'bilal.saeed@gmail.com', role: 'Customer' },
+  { id: 5, name: 'Nida Yousuf', email: 'nida.yousuf@gmail.com', role: 'Customer' },
+  { id: 6, name: 'Omar Farooq', email: 'omar.farooq@gmail.com', role: 'Staff' },
+  { id: 7, name: 'Jessica Brown', email: 'jessica.brown@gmail.com', role: 'Customer' }
+];
+
+
+  let feedback = [
+  { id: 1, customer: 'John Doe', message: 'Great service!', date: '2025-05-15' },
+  { id: 2, customer: 'Bob James', message: 'Could improve response time.', date: '2025-05-20' },
+  { id: 3, customer: 'Ayesha Siddiqui', message: 'Very friendly staff.', date: '2025-06-01' },
+  { id: 4, customer: 'Bilal Saeed', message: 'Smooth booking process.', date: '2025-06-03' },
+  { id: 5, customer: 'Fatima Noor', message: 'Loved the variety of cars.', date: '2025-06-10' },
+  { id: 6, customer: 'Jessica Brown', message: 'Showroom ambiance was excellent.', date: '2025-06-12' }
+];
+
+let supportTickets = [
+  { id: 1, customer: 'John Doe', issue: 'My vehicle delivery was delayed by 3 weeks.', status: 'Open' },
+  { id: 2, customer: 'Bob James', issue: 'Request to reschedule my test drive.', status: 'Resolved' },
+  { id: 3, customer: 'Zain Malik', issue: 'Wrong invoice generated.', status: 'Pending' },
+  { id: 4, customer: 'Fatima Noor', issue: 'Issue with warranty terms.', status: 'Resolved' },
+  { id: 5, customer: 'Imran Rafiq', issue: 'Need help with vehicle financing.', status: 'Open' },
+  { id: 6, customer: 'Ayesha Siddiqui', issue: 'I want to cancel my booking.', status: 'Closed' }
+];
+
+
+  let currentRole = null;
+  let currentTab = null;
+
+  const loginScreen = document.getElementById('loginScreen');
+  const dashboardScreen = document.getElementById('dashboardScreen');
+  const roleSelect = document.getElementById('roleSelect');
+  const loginForm = document.getElementById('loginForm');
+  const tabsContainer = document.getElementById('tabsContainer');
+  const headerButtons = document.getElementById('headerButtons');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const profileBtn = document.getElementById('profileBtn');
+
+  // Role-based tabs config
+  const tabsByRole = {
+    sales: [
+      {id:'vehiclesTab', label:'Vehicles'},
+      {id:'bookingsTab', label:'Bookings'},
+      {id:'usersTab', label:'Users'},
+      {id:'feedbackTab', label:'Feedback'},
+      {id:'reportsTab', label:'Reports'},
+    ],
+    support: [
+      {id:'supportTab', label:'Support Tickets'},
+      {id:'feedbackTab', label:'Feedback'},
+    ]
+  };
+
+  // Utility: clear tables tbody
+  function clearTable(tbody) {
+    while(tbody.firstChild) tbody.removeChild(tbody.firstChild);
+  }
+
+  // Login
+  loginForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const role = roleSelect.value;
+    if (!role) return alert('Please select a role');
+    currentRole = role;
+    loginScreen.hidden = true;
+    dashboardScreen.hidden = false;
+    headerButtons.hidden = false;
+    renderTabs(role);
+    showTab(tabsByRole[role][0].id);
+  });
+
+  logoutBtn.addEventListener('click', () => {
+    currentRole = null;
+    currentTab = null;
+    loginScreen.hidden = false;
+    dashboardScreen.hidden = true;
+    headerButtons.hidden = true;
+    roleSelect.value = "";
+  });
+
+  profileBtn.addEventListener('click', () => {
+    alert(`Profile:\nRole: ${currentRole === 'sales' ? 'Sales Manager' : 'Support'}\n(Static profile info for demo)`);
+  });
+
+  // Render tabs buttons for the role
+  function renderTabs(role) {
+    tabsContainer.innerHTML = '';
+    tabsByRole[role].forEach(tab => {
+      const btn = document.createElement('button');
+      btn.textContent = tab.label;
+      btn.id = tab.id + 'Btn';
+      btn.className = 'tab-btn';
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-controls', tab.id);
+      btn.addEventListener('click', () => showTab(tab.id));
+      tabsContainer.appendChild(btn);
+    });
+  }
+
+  // Show tab content and highlight tab button
+  function showTab(tabId) {
+    currentTab = tabId;
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content').forEach(tab => tab.hidden = true);
+    // Remove active from all buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    // Show selected
+    const activeTab = document.getElementById(tabId);
+    if (activeTab) activeTab.hidden = false;
+    const activeBtn = document.getElementById(tabId + 'Btn');
+    if (activeBtn) activeBtn.classList.add('active');
+
+    // Refresh data on each tab
+    if (tabId === 'vehiclesTab') renderVehiclesTable();
+    if (tabId === 'bookingsTab') renderBookingsTable();
+    if (tabId === 'usersTab') renderUsersTable();
+    if (tabId === 'feedbackTab') renderFeedbackTable();
+    if (tabId === 'supportTab') renderSupportTable();
+  }
+
+  /* ================= Vehicles ================= */
+
+  const vehicleForm = document.getElementById('vehicleForm');
+  const vehiclesTableBody = document.querySelector('#vehiclesTable tbody');
+  const searchVehicles = document.getElementById('searchVehicles');
+
+  vehicleForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const model = vehicleForm.model.value.trim();
+    const brand = vehicleForm.brand.value.trim();
+    const year = +vehicleForm.year.value;
+    const price = +vehicleForm.price.value;
+    const description = vehicleForm.description.value.trim();
+
+    const id = vehicles.length ? vehicles[vehicles.length-1].id + 1 : 1;
+    vehicles.push({id, model, brand, year, price, description});
+    vehicleForm.reset();
+    renderVehiclesTable();
+  });
+
+  function renderVehiclesTable(filter='') {
+    clearTable(vehiclesTableBody);
+    const filtered = vehicles.filter(v =>
+      v.model.toLowerCase().includes(filter.toLowerCase()) ||
+      v.brand.toLowerCase().includes(filter.toLowerCase()) ||
+      v.description.toLowerCase().includes(filter.toLowerCase())
+    );
+    filtered.forEach(vehicle => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${vehicle.id}</td>
+        <td>${vehicle.model}</td>
+        <td>${vehicle.brand}</td>
+        <td>${vehicle.year}</td>
+        <td>$${vehicle.price.toFixed(2)}</td>
+        <td>${vehicle.description}</td>
+        <td><button class="small-btn" data-id="${vehicle.id}">Delete</button></td>
+      `;
+      vehiclesTableBody.appendChild(tr);
+    });
+  }
+
+  vehiclesTableBody.addEventListener('click', e => {
+    if (e.target.classList.contains('small-btn')) {
+      const id = +e.target.getAttribute('data-id');
+      vehicles = vehicles.filter(v => v.id !== id);
+      renderVehiclesTable(searchVehicles.value);
+    }
+  });
+
+  searchVehicles.addEventListener('input', e => {
+    renderVehiclesTable(e.target.value);
+  });
+
+  /* ================= Bookings ================= */
+
+  const bookingsTableBody = document.querySelector('#bookingsTable tbody');
+  const searchBookings = document.getElementById('searchBookings');
+
+  function renderBookingsTable(filter='') {
+    clearTable(bookingsTableBody);
+    const filtered = bookings.filter(b =>
+      b.customer.toLowerCase().includes(filter.toLowerCase()) ||
+      b.vehicle.toLowerCase().includes(filter.toLowerCase()) ||
+      b.status.toLowerCase().includes(filter.toLowerCase())
+    );
+    filtered.forEach(booking => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${booking.id}</td>
+        <td>${booking.customer}</td>
+        <td>${booking.vehicle}</td>
+        <td>${booking.date}</td>
+        <td>${booking.status}</td>
+        <td><button class="small-btn" data-id="${booking.id}">Delete</button></td>
+      `;
+      bookingsTableBody.appendChild(tr);
+    });
+  }
+
+  bookingsTableBody.addEventListener('click', e => {
+    if (e.target.classList.contains('small-btn')) {
+      const id = +e.target.getAttribute('data-id');
+      bookings = bookings.filter(b => b.id !== id);
+      renderBookingsTable(searchBookings.value);
+    }
+  });
+
+  searchBookings.addEventListener('input', e => {
+    renderBookingsTable(e.target.value);
+  });
+
+  /* ================= Users ================= */
+
+  const userForm = document.getElementById('userForm');
+  const usersTableBody = document.querySelector('#usersTable tbody');
+  const searchUsers = document.getElementById('searchUsers');
+
+  userForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = userForm.name.value.trim();
+    const email = userForm.email.value.trim();
+    const role = userForm.role.value;
+
+    if (!name || !email || !role) {
+      alert('Please fill all user details.');
+      return;
+    }
+
+    const id = users.length ? users[users.length-1].id + 1 : 1;
+    users.push({id, name, email, role});
+    userForm.reset();
+    renderUsersTable();
+  });
+
+  function renderUsersTable(filter='') {
+    clearTable(usersTableBody);
+    const filtered = users.filter(u =>
+      u.name.toLowerCase().includes(filter.toLowerCase()) ||
+      u.email.toLowerCase().includes(filter.toLowerCase()) ||
+      u.role.toLowerCase().includes(filter.toLowerCase())
+    );
+    filtered.forEach(user => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${user.id}</td>
+        <td>${user.name}</td>
+        <td>${user.email}</td>
+        <td>${user.role}</td>
+        <td><button class="small-btn" data-id="${user.id}">Delete</button></td>
+      `;
+      usersTableBody.appendChild(tr);
+    });
+  }
+
+  usersTableBody.addEventListener('click', e => {
+    if (e.target.classList.contains('small-btn')) {
+      const id = +e.target.getAttribute('data-id');
+      users = users.filter(u => u.id !== id);
+      renderUsersTable(searchUsers.value);
+    }
+  });
+
+  searchUsers.addEventListener('input', e => {
+    renderUsersTable(e.target.value);
+  });
+
+  /* ================= Feedback ================= */
+
+  const feedbackTableBody = document.querySelector('#feedbackTable tbody');
+  const searchFeedback = document.getElementById('searchFeedback');
+
+  function renderFeedbackTable(filter='') {
+    clearTable(feedbackTableBody);
+    const filtered = feedback.filter(f =>
+      f.customer.toLowerCase().includes(filter.toLowerCase()) ||
+      f.message.toLowerCase().includes(filter.toLowerCase())
+    );
+    filtered.forEach(fb => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${fb.id}</td>
+        <td>${fb.customer}</td>
+        <td>${fb.message}</td>
+        <td>${fb.date}</td>
+        <td><button class="small-btn" data-id="${fb.id}">Delete</button></td>
+      `;
+      feedbackTableBody.appendChild(tr);
+    });
+  }
+
+  feedbackTableBody.addEventListener('click', e => {
+    if (e.target.classList.contains('small-btn')) {
+      const id = +e.target.getAttribute('data-id');
+      feedback = feedback.filter(fb => fb.id !== id);
+      renderFeedbackTable(searchFeedback.value);
+    }
+  });
+
+  searchFeedback.addEventListener('input', e => {
+    renderFeedbackTable(e.target.value);
+  });
+
+  /* ================= Support Tickets ================= */
+
+  const supportTableBody = document.querySelector('#supportTable tbody');
+  const searchSupport = document.getElementById('searchSupport');
+
+  function renderSupportTable(filter='') {
+    clearTable(supportTableBody);
+    const filtered = supportTickets.filter(s =>
+      s.customer.toLowerCase().includes(filter.toLowerCase()) ||
+      s.issue.toLowerCase().includes(filter.toLowerCase()) ||
+      s.status.toLowerCase().includes(filter.toLowerCase())
+    );
+    filtered.forEach(ticket => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ticket.id}</td>
+        <td>${ticket.customer}</td>
+        <td>${ticket.issue}</td>
+        <td>${ticket.status}</td>
+        <td><button class="small-btn" data-id="${ticket.id}">Delete</button></td>
+      `;
+      supportTableBody.appendChild(tr);
+    });
+  }
+
+  supportTableBody.addEventListener('click', e => {
+    if (e.target.classList.contains('small-btn')) {
+      const id = +e.target.getAttribute('data-id');
+      supportTickets = supportTickets.filter(s => s.id !== id);
+      renderSupportTable(searchSupport.value);
+    }
+  });
+
+  searchSupport.addEventListener('input', e => {
+    renderSupportTable(e.target.value);
+  });
+
+  // Initial render
+  renderVehiclesTable();
+  renderBookingsTable();
+  renderUsersTable();
+  renderFeedbackTable();
+  renderSupportTable();
+
+})();
+</script>
+

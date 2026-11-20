@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Dashboard | AutoTrack</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #1a1a1a, #4b0000);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .dashboard-container {
+      max-width: 1400px;
+      margin: auto;
+      padding: 50px 20px;
+      position: relative;
+    }
+
+    .logout-btn {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 22px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background-color: #c82333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 50px;
+      font-size: 2.8rem;
+      font-weight: bold;
+      color: #ffdddd;
+      text-shadow: 0 0 20px rgba(255, 100, 100, 0.6);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.2rem;
+      color: #ffcccc;
+      text-shadow: 0 0 10px rgba(255, 100, 100, 0.5);
+    }
+
+    .card {
+      background-color: #1f1f1f;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+      color: #fff;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
+    }
+
+    .card img {
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .btn-custom {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+    }
+
+    .btn-custom:hover {
+      background-color: #e60000;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    textarea {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      width: 100%;
+    }
+
+    input:focus,
+    textarea:focus {
+      background-color: #444;
+      outline: none;
+      box-shadow: 0 0 5px #ffcccc;
+    }
+
+    .section {
+      margin-bottom: 60px;
+    }
+
+    .footer {
+      background-color: #111;
+      color: #ccc;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      .card img {
+        height: 150px;
+      }
+
+      .logout-btn {
+        top: 15px;
+        right: 15px;
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Logout Button -->
+  <button class="logout-btn" onclick="location.href='login.html'">Logout</button>
+
+  <div class="dashboard-container">
+    <h1>Welcome to AutoTrack Customer Dashboard</h1>
+
+    <!-- Car Listings -->
+    <div class="section">
+      <h2>Available Cars</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        <!-- CAR CARDS START -->
+
+        <div class="col">
+          <div class="card h-100">
+            <img src="./images/Audi R8.jpg" class="card-img-top" alt="Audi R8">
+            <div class="card-body">
+              <h5 class="card-title">Audi R8</h5>
+              <p class="card-text">Price: $145,000</p>
+              <button class="btn btn-custom w-100">Order Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="./images/FORD MUSTANG.jpg" class="card-img-top" alt="Ford Mustang">
+            <div class="card-body">
+              <h5 class="card-title">Ford Mustang</h5>
+              <p class="card-text">Price: $85,000</p>
+              <button class="btn btn-custom w-100">Order Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="./images/Tesla Model S.jpg" class="card-img-top" alt="Tesla Model S">
+            <div class="card-body">
+              <h5 class="card-title">Tesla Model S</h5>
+              <p class="card-text">Price: $99,000</p>
+              <button class="btn btn-custom w-100">Order Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="./images/BMW 18.jpg" class="card-img-top" alt="BMW i8">
+            <div class="card-body">
+              <h5 class="card-title">BMW i8</h5>
+              <p class="card-text">Price: $135,000</p>
+              <button class="btn btn-custom w-100">Order Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="./images/Ferrari SF90.jpg" class="card-img-top" alt="Ferrari SF90">
+            <div class="card-body">
+              <h5 class="card-title">Ferrari SF90</h5>
+              <p class="card-text">Price: $507,000</p>
+              <button class="btn btn-custom w-100">Order Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="./images/Lamborghini Aventador.jpg" class="card-img-top" alt="Lamborghini Aventador">
+            <div class="card-body">
+              <h5 class="card-title">Lamborghini Aventador</h5>
+              <p class="card-text">Price: $393,000</p>
+              <button class="btn btn-custom w-100">Order Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="./images/1 Audi R8 GT review.jpg" class="card-img-top" alt="Audi R8 GT">
+            <div class="card-body">
+              <h5 class="card-title">Audi R8 GT</h5>
+              <p class="card-text">Price: $160,000</p>
+              <button class="btn btn-custom w-100">Order Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="./images/Lexus LFA.jpg" class="card-img-top" alt="Lexus LFA">
+            <div class="card-body">
+              <h5 class="card-title">Lexus LFA</h5>
+              <p class="card-text">Price: $375,000</p>
+              <button class="btn btn-custom w-100">Order Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="./images/cLaren 720S.jpg" class="card-img-top" alt="McLaren 720S">
+            <div class="card-body">
+              <h5 class="card-title">McLaren 720S</h5>
+              <p class="card-text">Price: $299,000</p>
+              <button class="btn btn-custom w-100">Order Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="./images/Lucid Air Pure.jpg" class="card-img-top" alt="Lucid Air Pure">
+            <div class="card-body">
+              <h5 class="card-title">Lucid Air Pure</h5>
+              <p class="card-text">Price: $77,400</p>
+              <button class="btn btn-custom w-100">Order Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="./images/Rivian R1T.jpg" class="card-img-top" alt="Rivian R1T">
+            <div class="card-body">
+              <h5 class="card-title">Rivian R1T</h5>
+              <p class="card-text">Price: $73,000</p>
+              <button class="btn btn-custom w-100">Order Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="./images/Hyundai Ioniq 6.jpg" class="card-img-top" alt="Hyundai Ioniq 6">
+            <div class="card-body">
+              <h5 class="card-title">Hyundai Ioniq 6</h5>
+              <p class="card-text">Price: $48,000</p>
+              <button class="btn btn-custom w-100">Order Now</button>
+            </div>
+          </div>
+        </div>
+        <!-- CAR CARDS END -->
+
+      </div>
+    </div>
+
+    <!-- Test Drive Booking -->
+    <div class="section">
+      <h2>Book a Test Drive</h2>
+      <form>
+        <div class="mb-3">
+          <label for="car-model" class="form-label">Car Model</label>
+          <input type="text" class="form-control" id="car-model" placeholder="Enter car model"/>
+        </div>
+        <div class="mb-3">
+          <label for="date" class="form-label">Preferred Date</label>
+          <input type="date" class="form-control" id="date"/>
+        </div>
+        <button type="submit" class="btn btn-custom">Book Test Drive</button>
+      </form>
+    </div>
+
+    <!-- Feedback Form -->
+    <div class="section">
+      <h2>Submit Feedback</h2>
+      <form>
+        <div class="mb-3">
+          <label for="feedback-text" class="form-label">Your Feedback</label>
+          <textarea class="form-control" id="feedback-text" rows="4" placeholder="Write your feedback..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-custom">Submit Feedback</button>
+      </form>
+    </div>
+
+    <!-- Booking History -->
+    <div class="section">
+      <h2>Your Booking History</h2>
+      <ul class="list-group bg-transparent">
+        <li class="list-group-item bg-dark text-white border-secondary">Audi R8 - Test Drive - 2024-06-05</li>
+        <li class="list-group-item bg-dark text-white border-secondary">Ford Mustang - Order Placed - 2024-05-20</li>
+        <li class="list-group-item bg-dark text-white border-secondary">Tesla Model S - Feedback Submitted</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer class="footer">
+    &copy; 2025 AutoTrack Showroom. All rights reserved.
+  </footer>
+
+<script>
+  // Order Now buttons
+  document.querySelectorAll('.card .btn-custom').forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+      const carTitle = btn.closest('.card-body').querySelector('.card-title').innerText;
+      alert(`✅ Order Successful!\n\nYou have successfully placed an order for: ${carTitle}\n\nThank you for choosing AUTOTrack!`);
+    });
+  });
+
+  // Book Test Drive form
+  const bookForm = document.querySelector('.section form');
+  if (bookForm) {
+    bookForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const model = document.getElementById('car-model').value.trim();
+      const date = document.getElementById('date').value;
+
+      if (model && date) {
+        alert(`🚗 Test Drive Booked!\n\nYou have booked a test drive for: ${model}\nPreferred Date: ${date}\n\nOur representative will contact you soon.`);
+      } else {
+        alert("⚠️ Please fill in both the car model and preferred date.");
+      }
+    });
+  }
+
+  // Feedback Form
+  const feedbackForm = document.querySelectorAll('.section form')[1];
+  if (feedbackForm) {
+    feedbackForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const feedback = document.getElementById('feedback-text').value.trim();
+
+      if (feedback) {
+        alert("💬 Thank you for your feedback!\nWe value your opinion and will use it to improve our services.");
+      } else {
+        alert("⚠️ Please write your feedback before submitting.");
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
